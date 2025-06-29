@@ -52,7 +52,7 @@ export default function PhotoTask({ task, onComplete, onSkip }: PhotoTaskProps) 
       formData.append('type', type)
       formData.append('taskId', task.id)
 
-      const result = await apiRequest('/api/photos/upload', {
+      const result = await apiRequest<{ url: string }>('/api/photos/upload', {
         method: 'POST',
         body: formData,
         headers: {
