@@ -10,8 +10,8 @@ export async function apiRequest<T = unknown>(
 ): Promise<T> {
   const { token, ...fetchOptions } = options
   
-  const headers: HeadersInit = {
-    ...fetchOptions.headers,
+  const headers: Record<string, string> = {
+    ...(fetchOptions.headers as Record<string, string> || {}),
   }
   
   // Content-Type 헤더는 FormData가 아닌 경우에만 설정
