@@ -22,10 +22,6 @@ export default function WorkflowPage() {
   const [workflowLogs, setWorkflowLogs] = useState<WorkflowLog[]>([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    loadWorkflow()
-  }, [workflowId, loadWorkflow])
-
   const loadWorkflow = useCallback(async () => {
     try {
       const data = await apiRequest<Workflow>(`/api/workflows/${workflowId}`)
@@ -49,6 +45,10 @@ export default function WorkflowPage() {
       setLoading(false)
     }
   }, [workflowId, storeId])
+
+  useEffect(() => {
+    loadWorkflow()
+  }, [workflowId, loadWorkflow])
 
   const handleTaskComplete = async (taskId: string, data: unknown) => {
     try {

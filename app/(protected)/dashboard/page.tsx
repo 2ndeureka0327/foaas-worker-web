@@ -18,22 +18,6 @@ export default function DashboardPage() {
   const [currentVisit, setCurrentVisit] = useState<StoreVisit | null>(null)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    loadInitialData()
-    checkLocation()
-  }, [checkLocation])
-
-  const loadInitialData = async () => {
-    try {
-      const storesData = await apiRequest<Store[]>('/api/stores/assigned')
-      setStores(storesData)
-    } catch (error) {
-      console.error('Failed to load data:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   const checkLocation = useCallback(async () => {
     try {
       const location = await getCurrentLocation()
@@ -59,6 +43,17 @@ export default function DashboardPage() {
     }
   }, [selectedStore])
 
+  const loadInitialData = async () => {
+    try {
+      const storesData = await apiRequest<Store[]>('/api/stores/assigned')
+      setStores(storesData)
+    } catch (error) {
+      console.error('Failed to load data:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const loadWorkflows = async (storeId: string) => {
     try {
       const data = await apiRequest<Workflow[]>(`/api/stores/${storeId}/workflows`)
@@ -67,6 +62,11 @@ export default function DashboardPage() {
       console.error('Failed to load workflows:', error)
     }
   }
+
+  useEffect(() => {
+    loadInitialData()
+    checkLocation()
+  }, [checkLocation])
 
   const handleCheckIn = async () => {
     if (!selectedStore) return
