@@ -39,13 +39,19 @@ export class SyncService {
       try {
         switch (item.type) {
           case 'photo_upload':
-            await this.syncPhoto(item)
+            await this.syncPhoto({
+              ...item,
+              data: item.data as { photo: string; type: string; taskId: string }
+            })
             break
           case 'workflow_log':
             await this.syncWorkflowLog(item)
             break
           case 'attendance':
-            await this.syncAttendance(item)
+            await this.syncAttendance({
+              ...item,
+              data: item.data as { type: string; [key: string]: unknown }
+            })
             break
         }
         

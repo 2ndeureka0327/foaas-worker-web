@@ -1,3 +1,5 @@
+import { Workflow } from './workflow'
+
 export interface Store {
   id: string
   name: string
