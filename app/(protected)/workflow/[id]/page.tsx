@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useParams, useSearchParams, useRouter } from 'next/navigation'
 import { apiRequest } from '@/lib/api'
-import { Workflow, Task, WorkflowLog } from '@/types/workflow'
+import { Workflow, WorkflowLog } from '@/types/workflow'
 import { ArrowLeft, CheckCircle, Circle } from 'lucide-react'
 import PhotoTask from '@/components/tasks/PhotoTask'
 import TextTask from '@/components/tasks/TextTask'
@@ -24,9 +24,9 @@ export default function WorkflowPage() {
 
   useEffect(() => {
     loadWorkflow()
-  }, [workflowId])
+  }, [workflowId, loadWorkflow])
 
-  const loadWorkflow = async () => {
+  const loadWorkflow = useCallback(async () => {
     try {
       const data = await apiRequest<Workflow>(`/api/workflows/${workflowId}`)
       setWorkflow(data)
@@ -48,9 +48,9 @@ export default function WorkflowPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [workflowId, storeId])
 
-  const handleTaskComplete = async (taskId: string, data: any) => {
+  const handleTaskComplete = async (taskId: string, data: unknown) => {
     try {
       // Create or update workflow log
       const log = await apiRequest<WorkflowLog>('/api/workflow-logs', {
@@ -117,7 +117,7 @@ export default function WorkflowPage() {
   }
 
   const currentTask = workflow.tasks[currentTaskIndex]
-  const currentLog = workflowLogs.find(l => l.taskId === currentTask.id)
+  // const currentLog = workflowLogs.find(l => l.taskId === currentTask.id)
 
   const renderTask = () => {
     switch (currentTask.type) {

@@ -6,9 +6,15 @@ import { Task } from '@/types/workflow'
 import { apiRequest } from '@/lib/api'
 import { OfflineStorage } from '@/lib/offline-storage'
 
+interface PhotoTaskData {
+  beforePhoto: string
+  afterPhoto: string
+  timestamp: string
+}
+
 interface PhotoTaskProps {
   task: Task
-  onComplete: (data: any) => void
+  onComplete: (data: PhotoTaskData) => void
   onSkip: () => void
 }
 
@@ -120,6 +126,7 @@ export default function PhotoTask({ task, onComplete, onSkip }: PhotoTaskProps) 
           <h3 className="font-medium mb-2">Before Photo</h3>
           {beforePhoto ? (
             <div className="relative">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={beforePhoto}
                 alt="Before"
@@ -148,6 +155,7 @@ export default function PhotoTask({ task, onComplete, onSkip }: PhotoTaskProps) 
           <h3 className="font-medium mb-2">After Photo</h3>
           {afterPhoto ? (
             <div className="relative">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={afterPhoto}
                 alt="After"

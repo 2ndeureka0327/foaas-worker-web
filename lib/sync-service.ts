@@ -59,7 +59,7 @@ export class SyncService {
     this.isSyncing = false
   }
 
-  private static async syncPhoto(item: any) {
+  private static async syncPhoto(item: { id: string; type: string; data: { photo: string; type: string; taskId: string }; timestamp: number }) {
     const { photo, type, taskId } = item.data
     
     // Convert base64 to blob
@@ -78,14 +78,14 @@ export class SyncService {
     })
   }
 
-  private static async syncWorkflowLog(item: any) {
+  private static async syncWorkflowLog(item: { id: string; type: string; data: unknown; timestamp: number }) {
     await apiRequest('/api/workflow-logs', {
       method: 'POST',
       body: JSON.stringify(item.data)
     })
   }
 
-  private static async syncAttendance(item: any) {
+  private static async syncAttendance(item: { id: string; type: string; data: { type: string; [key: string]: unknown }; timestamp: number }) {
     const { type, ...data } = item.data
     const endpoint = type === 'check-in' 
       ? '/api/attendance/check-in' 

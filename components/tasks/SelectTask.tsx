@@ -3,9 +3,14 @@
 import { useState } from 'react'
 import { Task } from '@/types/workflow'
 
+interface SelectTaskData {
+  selectedValues: string[]
+  timestamp: string
+}
+
 interface SelectTaskProps {
   task: Task
-  onComplete: (data: any) => void
+  onComplete: (data: SelectTaskData) => void
   onSkip: () => void
 }
 

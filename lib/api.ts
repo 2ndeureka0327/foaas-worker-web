@@ -4,7 +4,7 @@ interface ApiOptions extends RequestInit {
   token?: string
 }
 
-export async function apiRequest<T = any>(
+export async function apiRequest<T = unknown>(
   endpoint: string,
   options: ApiOptions = {}
 ): Promise<T> {

@@ -4,9 +4,14 @@ import { useState } from 'react'
 import { Task } from '@/types/workflow'
 import { Check } from 'lucide-react'
 
+interface CheckTaskData {
+  checkedItems: string[]
+  completedAt: string
+}
+
 interface CheckTaskProps {
   task: Task
-  onComplete: (data: any) => void
+  onComplete: (data: CheckTaskData) => void
   onSkip: () => void
 }
 

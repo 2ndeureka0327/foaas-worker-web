@@ -1,7 +1,7 @@
 interface OfflineData {
   id: string
   type: string
-  data: any
+  data: unknown
   timestamp: number
 }
 
@@ -14,7 +14,7 @@ export class OfflineStorage {
     return data ? JSON.parse(data) : []
   }
 
-  static addToQueue(type: string, data: any): void {
+  static addToQueue(type: string, data: unknown): void {
     if (typeof window === 'undefined') return
     
     const queue = this.getQueue()

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { LogOut, MapPin, Clock, CheckCircle } from 'lucide-react'
 import { apiRequest } from '@/lib/api'
@@ -21,7 +21,7 @@ export default function DashboardPage() {
   useEffect(() => {
     loadInitialData()
     checkLocation()
-  }, [])
+  }, [checkLocation])
 
   const loadInitialData = async () => {
     try {
@@ -34,7 +34,7 @@ export default function DashboardPage() {
     }
   }
 
-  const checkLocation = async () => {
+  const checkLocation = useCallback(async () => {
     try {
       const location = await getCurrentLocation()
       const storesData = await apiRequest<Store[]>('/api/stores/assigned')
@@ -57,7 +57,7 @@ export default function DashboardPage() {
     } catch (error) {
       console.error('Location check failed:', error)
     }
-  }
+  }, [selectedStore])
 
   const loadWorkflows = async (storeId: string) => {
     try {
@@ -213,7 +213,7 @@ export default function DashboardPage() {
 
         {isCheckedIn && workflows.length > 0 && (
           <div className="bg-white rounded-lg shadow p-4">
-            <h3 className="font-medium mb-3">Today's Tasks</h3>
+            <h3 className="font-medium mb-3">Today&apos;s Tasks</h3>
             <div className="space-y-2">
               {workflows.map(workflow => (
                 <a

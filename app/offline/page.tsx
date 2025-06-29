@@ -6,11 +6,11 @@ export default function OfflinePage() {
       <div className="text-center">
         <WifiOff className="h-16 w-16 text-gray-400 mx-auto mb-4" />
         <h1 className="text-2xl font-semibold text-gray-900 mb-2">
-          You're Offline
+          You&apos;re Offline
         </h1>
         <p className="text-gray-600 mb-6 max-w-md mx-auto px-4">
           You can still view cached content and complete tasks. 
-          Your data will sync when you're back online.
+          Your data will sync when you&apos;re back online.
         </p>
         <button
           onClick={() => window.location.reload()}
